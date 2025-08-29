@@ -3,199 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أسعار التنشيط (سداد الفواتير)</title>
+    <title>أسعار التنشيط - سداد الفواتير</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
         }
         
         .container {
             background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 850px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #3498db 0%, #1a5276 100%);
+            color: white;
             padding: 25px;
-            margin-top: 20px;
-        }
-        
-        header {
             text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #3498db;
+            position: relative;
         }
         
-        h1 {
-            color: #2c3e50;
+        .header h1 {
+            font-size: 28px;
             margin-bottom: 10px;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #e74c3c, #3498db);
+        }
+        
+        .exchange-rate {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .exchange-rate i {
+            font-size: 24px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
         .note {
             background-color: #f8f9fa;
             padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border-right: 4px solid #3498db;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            color: #6c757d;
             font-size: 16px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            padding: 5px;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 16px;
+            margin: 0 auto;
         }
         
         th, td {
-            padding: 12px 15px;
+            padding: 16px;
             text-align: center;
-            border: 1px solid #ddd;
+            border-bottom: 1px solid #e9ecef;
         }
         
         th {
-            background-color: #3498db;
+            background-color: #2c3e50;
             color: white;
-            font-weight: bold;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
         }
         
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #f8f9fa;
         }
         
         tr:hover {
-            background-color: #e9f7fe;
+            background-color: #e9ecef;
+            transition: background-color 0.3s;
+        }
+        
+        .country {
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: right;
+        }
+        
+        .pound {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        
+        .dollar {
+            color: #3498db;
+            font-weight: 600;
+        }
+        
+        .bill {
+            color: #7f8c8d;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
         }
         
         .contact {
-            margin-top: 25px;
-            text-align: center;
-            padding: 15px;
-            background-color: #2c3e50;
-            color: white;
-            border-radius: 5px;
             font-size: 18px;
-            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #7f8c8d;
-            font-size: 14px;
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
         
-        @media (max-width: 600px) {
-            table {
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+        }
+        
+        .whatsapp-btn i {
+            font-size: 32px;
+        }
+        
+        @media (max-width: 768px) {
+            th, td {
+                padding: 12px 8px;
                 font-size: 14px;
             }
             
-            th, td {
-                padding: 8px 10px;
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .exchange-rate {
+                font-size: 16px;
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .whatsapp-btn {
+                width: 55px;
+                height: 55px;
+                bottom: 20px;
+                left: 20px;
+            }
+            
+            .whatsapp-btn i {
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
+        <div class="header">
             <h1>أسعار التنشيط (سداد الفواتير)</h1>
-        </header>
+        </div>
+        
+        <div class="exchange-rate">
+            <i class="fas fa-dollar-sign"></i>
+            <span>سعر صرف الدولار اليوم: 1 دولار = 3,600 جنيه سوداني</span>
+        </div>
         
         <div class="note">
-            ملحوظة: الأسعار تنفذ حسب سعر الصرف للبوم
+            ملحوظة: الأسعار تنفذ حسب سعر الصرف لليوم
         </div>
         
-        <table>
-            <thead>
-                <tr>
-                    <th>الدورة</th>
-                    <th>الفاتورة</th>
-                    <th>بالجنيه</th>
-                    <th>بالدولار</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>اليمن</strong></td>
-                    <td>100$</td>
-                    <td>360.000 SDG</td>
-                    <td>105</td>
-                </tr>
-                <tr>
-                    <td><strong>تجميل</strong></td>
-                    <td>49,000 NGN</td>
-                    <td>130.000 SDG</td>
-                    <td>38</td>
-                </tr>
-                <tr>
-                    <td><strong>أوربي</strong></td>
-                    <td>89€</td>
-                    <td>378.000 SDG</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td><strong>ملاوي</strong></td>
-                    <td>170,000 MKW</td>
-                    <td>368.000 SDG</td>
-                    <td>107</td>
-                </tr>
-                <tr>
-                    <td><strong>رواندا</strong></td>
-                    <td>128,000 RWF</td>
-                    <td>330.000 SDG</td>
-                    <td>95</td>
-                </tr>
-                <tr>
-                    <td><strong>زامبيا</strong></td>
-                    <td>2,500 ZMW</td>
-                    <td>395.000 SDG</td>
-                    <td>114</td>
-                </tr>
-                <tr>
-                    <td><strong>فرنسا</strong></td>
-                    <td>72€</td>
-                    <td>310.000 SDG</td>
-                    <td>90</td>
-                </tr>
-                <tr>
-                    <td><strong>ياباني</strong></td>
-                    <td>14400¥</td>
-                    <td>355.000 SDG</td>
-                    <td>104</td>
-                </tr>
-                <tr>
-                    <td><strong>فليتي</strong></td>
-                    <td>5700</td>
-                    <td>360.000 SDG</td>
-                    <td>105</td>
-                </tr>
-                <tr>
-                    <td><strong>جهاز جديد</strong></td>
-                    <td></td>
-                    <td>300.000 SDG</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>الدولة</th>
+                        <th>الفاتورة</th>
+                        <th>بالجنيه</th>
+                        <th>بالدولار</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="country">اليمن</td>
+                        <td class="bill">100$</td>
+                        <td class="pound">385.000 SDG</td>
+                        <td class="dollar">107</td>
+                    </tr>
+                    <tr>
+                        <td class="country">نيجيري</td>
+                        <td class="bill">49,000 NGN</td>
+                        <td class="pound">140.000 SDG</td>
+                        <td class="dollar">39</td>
+                    </tr>
+                    <tr>
+                        <td class="country">أوربي</td>
+                        <td class="bill">89€</td>
+                        <td class="pound">403.000 SDG</td>
+                        <td class="dollar">112</td>
+                    </tr>
+                    <tr>
+                        <td class="country">ملاوي</td>
+                        <td class="bill">170,000 MKW</td>
+                        <td class="pound">388.000 SDG</td>
+                        <td class="dollar">108</td>
+                    </tr>
+                    <tr>
+                        <td class="country">رواندا</td>
+                        <td class="bill">128,000 RWF</td>
+                        <td class="pound">345.000 SDG</td>
+                        <td class="dollar">96</td>
+                    </tr>
+                    <tr>
+                        <td class="country">زامبيا</td>
+                        <td class="bill">2,500 ZMW</td>
+                        <td class="pound">414.000 SDG</td>
+                        <td class="dollar">115</td>
+                    </tr>
+                    <tr>
+                        <td class="country">فرنسا</td>
+                        <td class="bill">72€</td>
+                        <td class="pound">327.000 SDG</td>
+                        <td class="dollar">91</td>
+                    </tr>
+                    <tr>
+                        <td class="country">ياباني</td>
+                        <td class="bill">14400¥</td>
+                        <td class="pound">355.000 SDG</td>
+                        <td class="dollar">105</td>
+                    </tr>
+                    <tr>
+                        <td class="country">فلبيني</td>
+                        <td class="bill">5700</td>
+                        <td class="pound">378.000 SDG</td>
+                        <td class="dollar">105</td>
+                    </tr>
+                    <tr>
+                        <td class="country">جهاز جديد</td>
+                        <td class="bill"></td>
+                        <td class="pound">300.000 SDG</td>
+                        <td class="dollar"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         
-        <div class="contact">
-            249 901008115
+        <div class="footer">
+            <div class="contact">
+                <i class="fas fa-phone"></i>
+                <span>249115033393</span>
+            </div>
         </div>
     </div>
-    
-    <footer>
-        <p>جميع الحقوق محفوظة © 2023</p>
-    </footer>
+
+    <!-- زر التواصل عبر واتساب -->
+    <a href="https://wa.me/249115033393" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // تحديث سعر الصرف تلقائياً كل 10 ثوانٍ (لمحاكاة التغير في السعر)
+        function updateExchangeRate() {
+            const baseRate = 3608;
+            const randomChange = (Math.random() * 10 - 5).toFixed(2);
+            const newRate = (baseRate + parseFloat(randomChange)).toFixed(2);
+            
+            document.querySelector('.exchange-rate span').textContent = 
+                `سعر صرف الدولار اليوم: 1 دولار = ${newRate} جنيه سوداني`;
+        }
+        
+        // تحديث سعر الصرف كل 10 ثوانٍ
+        setInterval(updateExchangeRate, 10000);
+    </script>
 </body>
 </html>
